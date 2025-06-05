@@ -1,0 +1,2 @@
+# Freq_trader
+Bot
