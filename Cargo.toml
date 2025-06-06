@@ -1,0 +1,91 @@
+[package]
+name = "autonomous-arbitrage-bot"
+version = "2.0.0"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+description = "Autonomous cryptocurrency arbitrage bot for Binance with advanced risk management"
+license = "MIT"
+repository = "https://github.com/yourusername/arbitrage-bot"
+keywords = ["cryptocurrency", "arbitrage", "trading", "binance", "bot"]
+categories = ["finance", "api-bindings"]
+
+[[bin]]
+name = "arbitrage_bot"
+path = "src/autonomous_arbitrage_bot.rs"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# HTTP client
+reqwest = { version = "0.11", features = ["json", "stream"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Date/time handling
+chrono = { version = "0.4", features = ["serde"] }
+
+# Cryptography for API signatures
+hmac = "0.12"
+sha2 = "0.10"
+hex = "0.4"
+
+# Environment variables (optional but recommended)
+dotenv = { version = "0.15", optional = true }
+
+# Logging (optional but useful)
+log = { version = "0.4", optional = true }
+env_logger = { version = "0.10", optional = true }
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Mathematical operations
+rust_decimal = { version = "1.33", features = ["serde-float"] }
+
+# Configuration management
+config = { version = "0.13", optional = true }
+
+# Performance monitoring
+metrics = { version = "0.21", optional = true }
+
+[features]
+default = ["env-config", "logging"]
+env-config = ["dotenv", "config"]
+logging = ["log", "env_logger"]
+metrics = ["dep:metrics"]
+
+[profile.release]
+# Optimize for speed and size
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+# Faster compilation in development
+opt-level = 0
+debug = true
+overflow-checks = true
+
+# Development dependencies for testing
+[dev-dependencies]
+tokio-test = "0.4"
+mockito = "1.2"
+tempfile = "3.8"
+
+# Workspace configuration (if using multiple crates)
+[workspace]
+members = [
+    ".",
+    # Add other crates here if needed
+]
+
+# Metadata for cargo-generate or other tools
+[package.metadata.generate]
+cargo-generate-version = ">=0.10.0"
+authors = ["{{authors}}"]
