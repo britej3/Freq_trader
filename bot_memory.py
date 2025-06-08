@@ -1,4 +1,5 @@
 import json
+import streamlit as st
 from datetime import datetime
 
 class BotMemory:
@@ -27,3 +28,13 @@ class BotMemory:
                    for word in current_query.lower().split()):
                 relevant.append(entry)
         return relevant[-limit:]
+
+    def get_portfolio_snapshot(self):
+        """Return a basic snapshot of the current portfolio."""
+        trader = st.session_state.get('trader')
+        if trader is None:
+            return {}
+        return {
+            'balance': trader.balance,
+            'positions': trader.positions.copy()
+        }

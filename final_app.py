@@ -137,7 +137,7 @@ with col3:
     
     # Display messages
     for msg in st.session_state.chat_messages[-5:]:  # Show last 5
-        st.text(f"{msg[\'role\']}: {msg[\'content\'][:50]}...")
+        st.text(f"{msg['role']}: {msg['content'][:50]}...")
     
     # Input
     user_input = st.text_input("Ask the AI:")
