@@ -11,6 +11,8 @@ It uses Yahoo Finance for market data and provides paper trading to practice str
 - Paper trading portfolio with buy/sell history
 - Optional auto-trading logic
 - Conversation memory and a small retrieval-augmented knowledge base
+- Self-learning risk management that adjusts trade size based on
+  previous trade outcomes
 
 ## Setup
 

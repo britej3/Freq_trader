@@ -55,6 +55,13 @@ with col1:
             log_df = pd.DataFrame(st.session_state.auto_trader.trade_log)
             st.dataframe(log_df.tail(5))
 
+    # Display simple learning stats
+    mem = st.session_state.get('bot_memory')
+    if mem and mem.trade_outcomes:
+        stats = mem.summarize_performance()
+        st.subheader("Learning Stats")
+        st.write(f"Trades: {stats['total_trades']} | Wins: {stats['wins']} | Losses: {stats['losses']} | Avg P/L: {stats['avg_pl']:.2f}")
+
 with col2:
     st.subheader("Market Analysis")
     
@@ -157,16 +164,6 @@ with col3:
             Signal: {current_signal}
             RSI: {current_rsi:.1f}
             """
-        
-        context = f"""
-        Trading Context:
-        Portfolio Value: ${portfolio_value:.2f}
-        Current Balance: ${st.session_state.trader.balance:.2f}
-        
-        Question: {user_input}
-        
-        Answer in 2 sentences max.
-        """
         
         enhanced_response = enhanced_ai_response(user_input, current_market_context)
         st.session_state.chat_messages.append({"role": "ai", "content": enhanced_response})
